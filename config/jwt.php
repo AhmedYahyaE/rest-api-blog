@@ -101,7 +101,8 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60),
+    'ttl' => env('JWT_TTL', 60), // 60 minutes = 3600 seconds (but the HTTP Response "expires_in" key value is in seconds, not minutes)
+    // 'ttl' => env('JWT_TTL', 1), // 1 minute = 60 seconds (but the HTTP Response "expires_in" key value is in seconds, not minutes)
 
     /*
     |--------------------------------------------------------------------------

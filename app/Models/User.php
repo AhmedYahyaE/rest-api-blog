@@ -59,7 +59,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTIdentifier()
     {
-        return $this->getKey();
+        return $this->getKey(); // Use the user's unique ID for the JWT's 'Payload' 'sub' claim (i.e., the `id` column of the user in the `users` table)
     }
 
     /**
@@ -69,6 +69,13 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
+        // Add custom JWT Payload's claims to the issued JWT of a user (example: $this->is_active, $this->role, etc.)
+        /*
+            return [
+                'role' => $this->role, // User's role (e.g., admin, editor)
+                'is_active' => $this->is_active, // Whether the user's account is active
+            ];
+        */
         return [];
     }
 
