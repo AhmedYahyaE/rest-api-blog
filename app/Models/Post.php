@@ -13,6 +13,10 @@ class Post extends Model
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'title', 'user_id', 'content'
+    ];
+
 
 
     // A post belongs to a user

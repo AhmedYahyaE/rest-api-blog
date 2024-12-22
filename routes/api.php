@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\V1\{APIAuthenticationController};
+use App\Http\Controllers\API\V1\{APIAuthenticationController, PostAPIController};
 
 // Sanctum authentication routes
 /*
@@ -29,10 +29,16 @@ Route::prefix('v1')->group(function() {
         Route::post('/register', [APIAuthenticationController::class, 'register']); // WITH '/auth' prefix    // N.B. register() and login() methods are excluded by the Tymon JWT-Auth 'auth:api' Middleware
         Route::post('/login'   , [APIAuthenticationController::class, 'login']); // WITH '/auth' prefix    // N.B. register() and login() methods are excluded by the Tymon JWT-Auth 'auth:api' Middleware
 
-        // 'Authorization' Header of Bearer Token is required for the following routes
+        // Note: 'Authorization' Header of Bearer Token is required for ALL following routes:
+
         Route::post('me', [APIAuthenticationController::class, 'me']);
         Route::post('refresh', [APIAuthenticationController::class, 'refresh']);
         Route::post('/logout', [APIAuthenticationController::class, 'logout']);
+
+
+        // Posts Routes
+        Route::apiResource('posts', PostAPIController::class); // API Resource Controller (excludes 'create' & 'edit' methods automatically)
+        Route::patch('/posts/{post}', [PostAPIController::class, 'partiallyUpdate']); // Partial Update (PATCH) Route
     });
 
 });
