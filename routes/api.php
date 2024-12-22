@@ -15,6 +15,7 @@ use App\Http\Controllers\API\V1\{APIAuthenticationController, PostAPIController,
 
 // N.B. Run "php artisan route:list" command to check all the routes (correctly)!
 // N.B. "Accept: application/json" Header must be set in ALL HTTP Requests
+// Note: Whenever getting the authenticated user using auth() or Auth::user() within Authentication Routes method (e.g., /register, /login, /me, /refresh, /logout), this won't work properly, because in 'config/auth.php' file, we didn't change the default 'guard' from 'web' to 'api' (the default is 'web'), so we must use either auth('api') or Auth::guard('api') instead, to get the authenticated user. On the contrary, in the Protected Routes (e.g., /posts, /posts/{post}, etc. (i.e., the posts & comments routes)), we don't need to specify the 'api' guard using auth('api') nor Auth::guard('api') to get the authenticated user as Laravel does this automatically, because we applied the 'auth:api' Middleware to these routes, which tells Laravel explicitly to use the 'api' guard (not 'web') (which is configured in 'config/auth.php' file to use the 'jwt' 'driver' of the Tymon JWT-Auth package)
 Route::prefix('v1')->group(function() {
 
 
@@ -36,7 +37,7 @@ Route::prefix('v1')->group(function() {
 
 
     // Posts & Comments Routes (Protected Routes which require authentication (Tymon JWT-Auth package)) (i.e., User must be authenticated to access these routes)
-    Route::group(['middleware' => 'auth:api'], function() { // Protect routes that require authentication in our application: Apply Laravel's built-in 'auth' Middleware ('auth:api' tells Laravel to use the 'api' guard (not 'web') which is configured in 'config/auth.php' file to use the 'jwt' 'driver' of Tymon JWT-Auth package)
+    Route::group(['middleware' => 'auth:api'], function() { // Protect routes (by requiring authentication to access them) that require authentication in our application: Apply Laravel's built-in 'auth' Middleware which requires the user to be authenticated to access the route/s (N.B. 'auth:api' tells Laravel to use the 'api' guard (not 'web') which is configured in 'config/auth.php' file to use the 'jwt' 'driver' of the Tymon JWT-Auth package)
         Route::apiResource('posts'         , PostAPIController::class); // API Resource Controller (excludes 'create' & 'edit' methods automatically)
         Route::apiResource('posts.comments', CommentAPIController::class)->shallow(); // Shallow Nested API Resource Controller (Post has many Comments)
 
@@ -65,7 +66,7 @@ Route::prefix('v1')->group(function() {
 
 
         // Posts & Comments Routes (Protected Routes which require authentication (Tymon JWT-Auth package))
-        Route::group(['middleware' => 'auth:api'], function() { // Protect routes that require authentication in our application: Apply Laravel's built-in 'auth' Middleware ('auth:api' tells Laravel to use the 'api' guard (not 'web') which is configured in 'config/auth.php' file to use the 'jwt' 'driver' of Tymon JWT-Auth package)
+        Route::group(['middleware' => 'auth:api'], function() {  // Protect routes (by requiring authentication to access them) that require authentication in our application: Apply Laravel's built-in 'auth' Middleware which requires the user to be authenticated to access the route/s (N.B. 'auth:api' tells Laravel to use the 'api' guard (not 'web') which is configured in 'config/auth.php' file to use the 'jwt' 'driver' of the Tymon JWT-Auth package)
             Route::apiResource('posts'         , PostAPIController::class); // API Resource Controller (excludes 'create' & 'edit' methods automatically)
             Route::apiResource('posts.comments', CommentAPIController::class)->shallow(); // Shallow Nested API Resource Controller (Post has many Comments)
 
