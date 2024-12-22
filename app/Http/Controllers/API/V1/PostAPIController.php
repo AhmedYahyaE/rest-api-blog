@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\PartialUpdatePatchRequest;
-use App\Http\Requests\API\StorePostRequest;
-use App\Http\Requests\API\UpdatePostRequest;
-use App\Http\Resources\PostResource;
+use App\Http\Requests\API\{StorePostRequest, UpdatePostRequest, PartialUpdatePatchRequest};
+use App\Http\Resources\{PostResource, PostCollection};
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Http\Resources\PostCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -82,7 +79,7 @@ class PostAPIController extends Controller
     }
 
     // PATCH (partial update)
-    public function partiallyUpdate(Request $request, string $id)
+    public function partiallyUpdate(PartialUpdatePatchRequest $request, string $id)
     {
         // Note: All Policy classes won't work with the 'web' guard being set as the default guard in config/auth.php file, because Laravel will retrieve the authenticated user using the default 'web' guard, so we need to use    Auth::shouldUse('api');    just before any request reaches the Policy class. Example: refer to the update() method in PostAPIController and authorize() method in UpdatePostRequest
         /*
