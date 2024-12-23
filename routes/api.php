@@ -76,3 +76,43 @@ Route::prefix('v1')->group(function() {
         // End of Posts & Comments Routes
     });
 */
+
+
+
+// A "third" similar working route setup (the MOST CORRECT! '/logout' route functionality works here as we moved it inside the routes that requires authentication, as this allows Laravel to use the correct Auth::guard('api'), not the default 'web' guard) (Moved the '/me', '/refresh', and 'logout' routes to the route group that REQUIRES AUTHENTICATION) (Note: In this route setup, Authentication Routes doesn't have neither the 'api' Middleware Group nor the '/auth' prefix, i.e., the Route::group() has been ommitted altogether)
+// Remove the '/auth' prefix from the '/me', '/refresh', and 'logout' routes.
+// Route::prefix('v1')->group(function() {
+
+
+//     // Public Routes (No 'auth:api' Middleware Group applied)   // Authentication Routes (i.e., Getting authenticated)  (Tymon JWT-Auth package authentication)
+//     // N.B. This group() can be omitted altogether. It's just mentioned in Tymon JWT-Auth package's documentation
+//     Route::group([
+//         'middleware' => 'api', // N.B. This line can be omitted!    // Apply Laravel's built-in 'api' Middleware Group defined in 'vendor\laravel\framework\src\Illuminate\Foundation\Configuration\Middleware.php'. Refer to:    Laravel's Default Middleware Groups: https://laravel.com/docs/11.x/middleware#laravels-default-middleware-groups
+//         'prefix'     => 'auth' // N.B. This line can be omitted. It's just a prefix mentioned in Tymon JWT-Auth package's documentation
+//     ], function ($router) {
+//         // Tymon JWTAuth: https://jwt-auth.readthedocs.io/en/develop/quick-start    // https://www.linkedin.com/pulse/jwt-authentication-laravel-11-sanjay-jaiswar-kbelf
+//         Route::post('/register', [APIAuthenticationController::class, 'register']); // WITH '/auth' prefix    // N.B. register() and login() methods are excluded by the Tymon JWT-Auth 'auth:api' Middleware
+//         Route::post('/login'   , [APIAuthenticationController::class, 'login']); // WITH '/auth' prefix    // N.B. register() and login() methods are excluded by the Tymon JWT-Auth 'auth:api' Middleware
+
+//     });
+//     // End of Authentication Routes
+
+
+//     // Posts & Comments Routes (Protected Routes which require authentication (Tymon JWT-Auth package)) (i.e., User must be authenticated to access these routes)
+//     Route::group(['middleware' => 'auth:api'], function() { // Protect routes (by requiring authentication to access them) that require authentication in our application: Apply Laravel's built-in 'auth' Middleware which requires the user to be authenticated to access the route/s (N.B. 'auth:api' tells Laravel to use the 'api' guard (not 'web') which is configured in 'config/auth.php' file to use the 'jwt' 'driver' of the Tymon JWT-Auth package). This way, we don't need to use    Auth::shouldUse('api'); (especially before request reaches Policy classes),nor auth('api'), nor Auth::guard('api')    within the controller methods of these routes.
+//         // Note: 'Authorization' Header of Bearer Token is required for ALL following routes:
+//         Route::post('me', [APIAuthenticationController::class, 'me']);
+//         Route::post('refresh', [APIAuthenticationController::class, 'refresh']);
+//         Route::post('/logout', [APIAuthenticationController::class, 'logout']);
+
+
+//         Route::apiResource('posts'         , PostAPIController::class); // API Resource Controller (excludes 'create' & 'edit' methods automatically)
+//         Route::apiResource('posts.comments', CommentAPIController::class)->shallow(); // Shallow Nested API Resource Controller (Post has many Comments)
+
+//         Route::patch('/posts/{post}', [PostAPIController::class, 'partiallyUpdate']); // Partial Update (PATCH) Route
+//     });
+//     // End of Posts & Comments Routes
+
+
+// });
+
