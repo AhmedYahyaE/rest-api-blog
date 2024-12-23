@@ -10,11 +10,81 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
+/**
+ * @OA\Schema(
+ *     schema="Post",
+ *     type="object",
+ *     required={"id", "title", "content", "created_at"},
+ *     @OA\Property(property="id", type="integer", description="Post ID"),
+ *     @OA\Property(property="title", type="string", description="Post title"),
+ *     @OA\Property(property="content", type="string", description="Post content"),
+ *     @OA\Property(property="created_at", type="string", format="date-time", description="Creation timestamp"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp")
+ * )
+ */
+/**
+ * @OA\Schema(
+ *     schema="UpdatePostRequest",
+ *     type="object",
+ *     required={"title", "content"},
+ *     @OA\Property(property="title", type="string", description="Updated post title"),
+ *     @OA\Property(property="content", type="string", description="Updated post content")
+ * )
+ */
+/**
+ * @OA\Schema(
+ *     schema="StorePostRequest",
+ *     type="object",
+ *     required={"title", "content"},
+ *     @OA\Property(property="title", type="string", description="Post title"),
+ *     @OA\Property(property="content", type="string", description="Post content")
+ * )
+ */
+
 class PostAPIController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    /**
+     * @OA\Get(
+     *     path="/api/v1/posts",
+     *     summary="Get all posts",
+     *     description="Fetch a list of posts with pagination",
+     *     tags={"Posts"},
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Number of posts per page",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Post")
+     *         )
+     *     ),
+     *     security={{"bearerAuth": {}}}
+     * )
+     */
+
+     /**
+     * @OA\Schema(
+     *     schema="Post",
+     *     type="object",
+     *     required={"id", "title", "content", "created_at"},
+     *     @OA\Property(property="id", type="integer", description="Post ID"),
+     *     @OA\Property(property="title", type="string", description="Post title"),
+     *     @OA\Property(property="content", type="string", description="Post content"),
+     *     @OA\Property(property="created_at", type="string", format="date-time", description="Creation timestamp"),
+     *     @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp")
+     * )
+     */
+
+
     public function index(Request $request)
     {
         // dd($request->all());
@@ -32,6 +102,33 @@ class PostAPIController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     */
+    /**
+     * @OA\Post(
+     *     path="/api/v1/posts",
+     *     summary="Store a new post",
+     *     description="Create a new post by providing the required fields",
+     *     tags={"Posts"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/StorePostRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Post created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *     ),
+     *     security={{"bearerAuth": {}}}
+     * )
+     */
+    /**
+     * @OA\Schema(
+     *     schema="UpdatePostRequest",
+     *     type="object",
+     *     required={"title", "content"},
+     *     @OA\Property(property="title", type="string", description="Updated post title"),
+     *     @OA\Property(property="content", type="string", description="Updated post content")
+     * )
      */
     public function store(StorePostRequest $request)
     {
@@ -59,6 +156,39 @@ class PostAPIController extends Controller
 
     /**
      * Update the specified resource in storage.
+     */
+    /**
+     * @OA\Put(
+     *     path="/api/v1/posts/{id}",
+     *     summary="Update a post",
+     *     description="Update a specific post by ID.",
+     *     tags={"Posts"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Post ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/UpdatePostRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Post")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post not found"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized"
+     *     ),
+     *     security={{"bearerAuth": {}}}
+     * )
      */
     public function update(UpdatePostRequest $request, string $id)
     {

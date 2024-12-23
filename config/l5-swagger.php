@@ -5,7 +5,8 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                // 'title' => 'L5 Swagger UI',
+                'title' => 'My Blog API Documentation',
             ],
 
             'routes' => [
@@ -215,6 +216,14 @@ return [
                     'in' => 'header', // The location of the API key. Valid values are "query" or "header".
                 ],
                 */
+
+                'Tymon JWT-Auth' => [ // Example for JWT
+                'type' => 'http',
+                'scheme' => 'bearer',
+                'bearerFormat' => 'JWT',
+            ],
+
+
             ],
             'security' => [
                 /*
@@ -229,6 +238,8 @@ return [
 
                     'passport' => []
                     */
+
+                    'security' => [['bearerAuth' => []]]
                 ],
             ],
         ],

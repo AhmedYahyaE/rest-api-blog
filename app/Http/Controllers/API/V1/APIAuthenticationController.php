@@ -13,6 +13,20 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @OA\Info(
+ *     title="My API Documentation",
+ *     version="1.0.0",
+ *     description="API documentation for my application"
+ * )
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
+ * )
+ */
 class APIAuthenticationController extends Controller // Tymon JWTAuth: https://jwt-auth.readthedocs.io/en/develop/quick-start    // https://www.linkedin.com/pulse/jwt-authentication-laravel-11-sanjay-jaiswar-kbelf
 {
     /**
@@ -36,6 +50,37 @@ class APIAuthenticationController extends Controller // Tymon JWTAuth: https://j
      * @param RegisterAPIRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * Register a new user.
+     *
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Register a new user",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "email", "password"},
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="string", example="john.doe@example.com"),
+     *             @OA\Property(property="password", type="string", example="password123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="User successfully registered",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="User registered successfully."),
+     *             @OA\Property(property="user", type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="name", type="string", example="John Doe"),
+     *                 @OA\Property(property="email", type="string", example="john.doe@example.com"),
+     *                 @OA\Property(property="created_at", type="string", example="2024-12-22T12:00:00.000000Z")
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function register(RegisterAPIRequest $request): JsonResponse {
         $newRegisteredUser = User::create([
             'name'     => $request->name,
@@ -55,6 +100,37 @@ class APIAuthenticationController extends Controller // Tymon JWTAuth: https://j
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     * Log in and get a JWT.
+     *
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Log in a user",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *             @OA\Property(property="email", type="string", example="john.doe@example.com"),
+     *             @OA\Property(property="password", type="string", example="password123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful login",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="access_token", type="string", example="your_jwt_token"),
+     *             @OA\Property(property="token_type", type="string", example="bearer"),
+     *             @OA\Property(property="expires_in", type="integer", example=3600)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(@OA\Property(property="error", type="string", example="Unauthorized"))
+     *     )
+     * )
      */
     public function login(LoginAPIRequest $request)
     {
@@ -85,6 +161,24 @@ class APIAuthenticationController extends Controller // Tymon JWTAuth: https://j
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
+     */
+
+     /**
+     * Log the user out (invalidate the token).
+     *
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Log out a user",
+     *     tags={"Authentication"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful logout",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Successfully logged out")
+     *         )
+     *     )
+     * )
      */
     public function logout()
     {

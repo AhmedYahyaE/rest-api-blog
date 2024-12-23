@@ -1,0 +1,353 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My API Documentation",
+        "description": "API documentation for my application",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "description": "Register a new user.",
+                "operationId": "33a27ab41cd7ca0f8bede4211f491ae9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User registered successfully."
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "john.doe@example.com"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2024-12-22T12:00:00.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log in a user",
+                "description": "Log in and get a JWT.",
+                "operationId": "839394fad21046c8ce963946440cb5f8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "your_jwt_token"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log out a user",
+                "description": "Log the user out (invalidate the token).",
+                "operationId": "f456ea8827beaa9bbe57b3a6a98bc521",
+                "responses": {
+                    "200": {
+                        "description": "Successful logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/posts/{id}": {
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Update a post",
+                "description": "Update a specific post by ID.",
+                "operationId": "106e2e3655fde890a91a8cd0c5d02615",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePostRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StorePostRequest": {
+                "required": [
+                    "title",
+                    "content"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Post title",
+                        "type": "string"
+                    },
+                    "content": {
+                        "description": "Post content",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Post": {
+                "required": [
+                    "id",
+                    "title",
+                    "content",
+                    "created_at"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Post ID",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Post title",
+                        "type": "string"
+                    },
+                    "content": {
+                        "description": "Post content",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdatePostRequest": {
+                "required": [
+                    "title",
+                    "content"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Updated post title",
+                        "type": "string"
+                    },
+                    "content": {
+                        "description": "Updated post content",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "Tymon JWT-Auth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Posts",
+            "description": "Posts"
+        }
+    ],
+    "security": [
+        {
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    ]
+}
