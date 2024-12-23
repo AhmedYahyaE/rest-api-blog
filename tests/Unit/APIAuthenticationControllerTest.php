@@ -7,13 +7,13 @@ namespace Tests\Unit;
 
 // use PHPUnit\Framework\TestCase;
 use Tests\TestCase; // We have to import this class as instructed in Laravel 11 documentation: https://laravel.com/docs/11.x/http-tests
-// use Illuminate\Foundation\Testing\RefreshDatabase; // This trait also migrate database automatically    // Resetting the Database After Each Test: https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test
-use Illuminate\Foundation\Testing\DatabaseTransactions; // This trait automatically rollbacks database after each test (to not affect data in our existing database)    // Resetting the Database After Each Test: https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test
+// use Illuminate\Foundation\Testing\RefreshDatabase; // This trait automatically refreshes (empty data) and then migrates database automatically with every "php artisan test" (this trait is recommended to use if you're using a .env.testing file, not .env, meaning you're using a separate SQLite (configure it to be in-memory database) for testing)    // Resetting the Database After Each Test: https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test
+use Illuminate\Foundation\Testing\DatabaseTransactions; // This trait automatically rollbacks database after each test (to not affect data in our existing database) (this trait is recommended to use if you're using .env file, not .env.testing, meaning you're using your main database)    // Resetting the Database After Each Test: https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test
 
 class APIAuthenticationControllerTest extends TestCase
 {
-    // use RefreshDatabase; // This trait also migrate database automatically    // This trait will automatically migrate the database before each test and refresh (empty data) the database after each test    // Resetting the Database After Each Test: https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test
-    use DatabaseTransactions; // This trait automatically rollbacks database after each test (to not affect data in our existing database)    // Resetting the Database After Each Test: https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test
+    // use RefreshDatabase; // This trait automatically refreshes (empty data) and then migrates database automatically with every "php artisan test" (this trait is recommended to use if you're using a .env.testing file, not .env, meaning you're using a separate SQLite (configure it to be in-memory database) for testing)    // Resetting the Database After Each Test: https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test
+    use DatabaseTransactions; // This trait automatically rollbacks database after each test (to not affect data in our existing database) (this trait is recommended to use if you're using .env file, not .env.testing, meaning you're using your main database)    // Resetting the Database After Each Test: https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test
 
     /**
      * A basic unit test example.

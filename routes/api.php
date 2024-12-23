@@ -19,7 +19,7 @@ use App\Http\Controllers\API\V1\{APIAuthenticationController, PostAPIController,
 Route::prefix('v1')->group(function() {
 
 
-    // Authentication Routes (i.e., Getting authenticated)  (Tymon JWT-Auth package authentication)
+    // Public Routes (No 'auth:api' Middleware Group applied)   // Authentication Routes (i.e., Getting authenticated)  (Tymon JWT-Auth package authentication)
     // N.B. This group() can be omitted altogether. It's just mentioned in Tymon JWT-Auth package's documentation
     Route::group([
         'middleware' => 'api', // N.B. This line can be omitted!    // Apply Laravel's built-in 'api' Middleware Group defined in 'vendor\laravel\framework\src\Illuminate\Foundation\Configuration\Middleware.php'. Refer to:    Laravel's Default Middleware Groups: https://laravel.com/docs/11.x/middleware#laravels-default-middleware-groups
@@ -54,7 +54,7 @@ Route::prefix('v1')->group(function() {
 // Similar working route setup (Note: In this route setup, Authentication Routes doesn't have neither the 'api' Middleware Group nor the '/auth' prefix, i.e., the Route::group() has been ommitted altogether)
 /*
     Route::prefix('v1')->group(function() {
-        // Authentication Routes (i.e., getting authenticated)  (Tymon JWT-Auth package authentication)
+        // Public Routes (No 'auth:api' Middleware Group applied)    // Authentication Routes (i.e., getting authenticated)  (Tymon JWT-Auth package authentication)
         // Tymon JWTAuth: https://jwt-auth.readthedocs.io/en/develop/quick-start    // https://www.linkedin.com/pulse/jwt-authentication-laravel-11-sanjay-jaiswar-kbelf
         Route::post('/register', [APIAuthenticationController::class, 'register']); // WITH '/auth' prefix    // N.B. register() and login() methods are excluded by the Tymon JWT-Auth 'auth:api' Middleware
         Route::post('/login'   , [APIAuthenticationController::class, 'login']); // WITH '/auth' prefix    // N.B. register() and login() methods are excluded by the Tymon JWT-Auth 'auth:api' Middleware
