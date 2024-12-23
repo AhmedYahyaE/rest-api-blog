@@ -5,7 +5,7 @@ This is a Blogging Platform RESTful application built with **Laravel 11** with t
 
 ## Technical Features
 
-This appliction features API Resource classes, Resource Collection classes, Factories & Seeders, Form Request classes, API Versioning, Unit Tests, and API Documentation using L5 Swagger package.
+This appliction features JWT authentication, API Resource classes, Resource Collection classes, Factories & Seeders, Form Request classes, API Versioning, Unit Tests, and API Documentation using L5 Swagger package.
 API endpoints tested using Postman.
 
 
