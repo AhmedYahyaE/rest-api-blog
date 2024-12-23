@@ -1,4 +1,4 @@
-# ClickShare E-Commerce Product Management Feature Application
+# Blogging Platform RESTful API Application
 
 This is a Blogging Platform RESTful application built with **Laravel 11** with the help of Tymon JWT-Auth package for API authentication.
 
