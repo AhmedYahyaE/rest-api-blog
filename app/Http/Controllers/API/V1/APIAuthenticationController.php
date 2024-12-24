@@ -191,6 +191,8 @@ class APIAuthenticationController extends Controller // Tymon JWTAuth: https://j
         */
 
         // The correct way of logout using the JWTAuth Facade: https://medium.com/@a3rxander/how-to-implement-jwt-authentication-in-laravel-11-26e6d7be5a41
+        // auth('api')->invalidate(); // https://jwt-auth.readthedocs.io/en/develop/auth-guard/#logout
+        // Auth::guard('api')->invalidate(); // https://jwt-auth.readthedocs.io/en/develop/auth-guard/#logout
         JWTAuth::invalidate(JWTAuth::getToken()); // This stores the blacklisted token in the `cache` database table
 
 
