@@ -183,7 +183,7 @@ class APIAuthenticationController extends Controller // Tymon JWTAuth: https://j
      */
     public function logout()
     {
-        // From Tymon JWT-Auth Documentation (Doesn't work as    Auth::guard('api')->logout()    is designed for session-based authentication, and not for JWT authentication): https://jwt-auth.readthedocs.io/en/develop/quick-start/
+        // From Tymon JWT-Auth Documentation (Doesn't work! Check https://github.com/tymondesigns/jwt-auth/issues/1952): https://jwt-auth.readthedocs.io/en/develop/quick-start/
         /*
             // auth()->logout(); // Note: Since we didn't change the default 'guard' from 'web' to 'api' in the 'config/auth.php' file, we must to specify the 'api' guard whenever we retrieve the authenticated user, e.g. auth() doesn't work because it uses the default 'web' guard, so we must use either auth('api') or Auth::guard('api'). Check Accessing Specific Guard Instances: https://laravel.com/docs/11.x/authentication#accessing-specific-guard-instances
             // auth('api')->logout(); // Note: Since we didn't change the default 'guard' from 'web' to 'api' in the 'config/auth.php' file, we must to specify the 'api' guard whenever we retrieve the authenticated user, e.g. auth() doesn't work because it uses the default 'web' guard, so we must use either auth('api') or Auth::guard('api'). Check Accessing Specific Guard Instances: https://laravel.com/docs/11.x/authentication#accessing-specific-guard-instances
