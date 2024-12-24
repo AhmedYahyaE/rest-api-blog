@@ -191,7 +191,7 @@ class APIAuthenticationController extends Controller // Tymon JWTAuth: https://j
         */
 
         // The correct way of logout using the JWTAuth Facade: https://medium.com/@a3rxander/how-to-implement-jwt-authentication-in-laravel-11-26e6d7be5a41
-        JWTAuth::invalidate(JWTAuth::getToken());
+        JWTAuth::invalidate(JWTAuth::getToken()); // This stores the blacklisted token in the `cache` database table
 
 
         return response()->json(['message' => 'Successfully logged out']);
